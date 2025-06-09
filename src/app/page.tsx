@@ -50,23 +50,6 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Test Section Card */}
-          <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
-            <div className="text-3xl mb-4">🧪</div>
-            <h3 className="text-xl font-semibold mb-3 text-gray-800">
-              Sekcja Testowa
-            </h3>
-            <p className="text-gray-600 mb-4">
-              Eksperymentalna sekcja z nowymi funkcjami.
-            </p>
-            <Link 
-              href="/test"
-              className="inline-block w-full text-center px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors"
-            >
-              Sprawdź Testy
-            </Link>
-          </div>
-
           {/* AI Quiz Card - Coming Soon */}
           <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow opacity-75">
             <div className="text-3xl mb-4">🤖</div>

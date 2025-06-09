@@ -6,6 +6,7 @@ Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 
 ### Dodane
 - 🗑️ **Usunięcie Prosty Quiz AI** - Usunięto prosty quiz na rzecz bardziej zaawansowanych funkcji
+- 🗑️ **Usunięcie Sekcji Testowej** - Usunięto eksperymentalną sekcję testową
 
 ### Zmienione
 - 🎨 **Ulepszony układ strony głównej** - Zoptymalizowano układ kart po usunięciu Prosty Quiz AI

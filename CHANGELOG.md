@@ -2,6 +2,19 @@
 
 Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 
+## [1.1.0] - 2025-06-09
+
+### Dodane
+- 🗑️ **Usunięcie Prosty Quiz AI** - Usunięto prosty quiz na rzecz bardziej zaawansowanych funkcji
+
+### Zmienione
+- 🎨 **Ulepszony układ strony głównej** - Zoptymalizowano układ kart po usunięciu Prosty Quiz AI
+
+### Techniczne
+- 🧹 **Czyszczenie kodu** - Usunięto nieużywane komponenty i foldery
+
+---
+
 ## Format
 - **[Wersja]** - Data wydania
 - **Dodane** - Nowe funkcje

@@ -16,23 +16,6 @@ export default function HomePage() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Simple Quiz Card */}
-          <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
-            <div className="text-3xl mb-4">📚</div>
-            <h3 className="text-xl font-semibold mb-3 text-gray-800">
-              Prosty Quiz AI
-            </h3>
-            <p className="text-gray-600 mb-4">
-              Podstawowe pytania o sztuczną inteligencję i uczenie maszynowe.
-            </p>
-            <Link 
-              href="/simple-quiz"
-              className="inline-block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Rozpocznij Quiz
-            </Link>
-          </div>
-
           {/* Advanced Quiz Card */}
           <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
             <div className="text-3xl mb-4">🚀</div>

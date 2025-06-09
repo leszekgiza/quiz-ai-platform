@@ -20,7 +20,7 @@ export default function HomePage() {
           <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
             <div className="text-3xl mb-4">🚀</div>
             <h3 className="text-xl font-semibold mb-3 text-gray-800">
-              Quiz Zaawansowany
+              Quiz
             </h3>
             <p className="text-gray-600 mb-4">
               Bardziej zaawansowane pytania dla ekspertów AI.

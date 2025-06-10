@@ -60,6 +60,17 @@ export const questions: QuizQuestion[] = [
     ],
     correct: 1,
     definitionId: 5
+  },
+  {
+    id: 6,
+    question: "Technologia umożliwiająca maszynom wykonywanie zadań, które normalnie wymagają ludzkiej inteligencji, to:",
+    options: [
+      "Machine Learning (ML)",
+      "Artificial Intelligence (AI)",
+      "Generative AI",
+      "Data-Driven Decisions"
+    ],
+    correct: 1,
+    definitionId: 1
   }
-  // More questions will be added in the next steps
 ];

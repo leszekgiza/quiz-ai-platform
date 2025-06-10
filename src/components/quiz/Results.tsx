@@ -36,7 +36,7 @@ export default function Results({ score, total, onReset }: ResultsProps) {
         </p>
       )}
       
-      <div className="space-x-4">
+      <div className="space-x-4 flex flex-col sm:flex-row gap-4 justify-center">
         <button
           onClick={onReset}
           className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
@@ -45,9 +45,15 @@ export default function Results({ score, total, onReset }: ResultsProps) {
         </button>
         <Link
           href="/glossary"
-          className="inline-block px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+          className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 text-center"
         >
           Zobacz definicje
+        </Link>
+        <Link
+          href="/"
+          className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 text-center"
+        >
+          Wróć do strony głównej
         </Link>
       </div>
     </div>

@@ -10,6 +10,7 @@ Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 - ✏️ **Zmiana nazwy karty** - Zmieniono nazwę "Quiz Zaawansowany" na "Quiz"
 - 🏠 **Dodano przycisk powrotu** - Dodano przycisk "Wróć do strony głównej" na ekranie wyników quizu
 - ❓ **Nowe pytanie w quizie** - Dodano nowe pytanie sprawdzające zrozumienie definicji sztucznej inteligencji
+- 🐛 **Poprawki formatowania** - Naprawiono problemy z cudzysłowami w pytaniach quizu
 
 ### Zmienione
 - 🎨 **Ulepszony układ strony głównej** - Zoptymalizowano układ kart po usunięciu Prosty Quiz AI

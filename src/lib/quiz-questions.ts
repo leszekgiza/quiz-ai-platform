@@ -175,8 +175,8 @@ export const questions: QuizQuestion[] = [
     options: [
       "Reinforcement Learning from Human Feedback (RLHF)",
       "Deep Fake Modeling",
-      "Na chłopski rozum" – edycja algorytmu przez wujka z forum",
-      "Metoda „na chybił-trafił” – aż zacznie działać"
+      "'Na chłopski rozum' – edycja algorytmu przez wujka z forum",
+      "Metoda 'na chybił-trafił' – aż zacznie działać"
     ],
     correct: 1,
     definitionId: 1
@@ -185,9 +185,9 @@ export const questions: QuizQuestion[] = [
     id: 16,
     question: "Metoda uczenia komputerów poprzez analizę danych, bez bezpośredniego programowania każdej czynności, to:",
     options: [
-      "Strategia „kopiuj–wklej aż zadziała",
-      "Kurs komputerowy dla robotów: „Excel dla zaawansowanych",
-      "Magia informatyczna – czyli „działa, ale nie wiadomo czemu",
+      "Strategia 'kopiuj–wklej aż zadziała'",
+      "Kurs komputerowy dla robotów: 'Excel dla zaawansowanych'",
+      "Magia informatyczna – czyli 'działa, ale nie wiadomo czemu'",
       "Uczenie maszynowe (Machine Learning)"
     ],
     correct: 1,

@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 interface ResultsProps {
@@ -10,17 +9,11 @@ interface ResultsProps {
 }
 
 export default function Results({ score, total, onReset }: ResultsProps) {
-  const [bestScore, setBestScore] = useState<number | null>(null);
   const percentage = Math.round((score / total) * 100);
   
   const level = percentage <= 40 ? 'Początkujący' : 
                 percentage <= 70 ? 'Średniozaawansowany' : 
                 'Ekspert';
-
-  useEffect(() => {
-    const saved = localStorage.getItem('quizBestScore');
-    if (saved) setBestScore(parseInt(saved));
-  }, []);
 
   return (
     <div className="max-w-2xl mx-auto p-8 bg-white rounded-lg shadow-lg text-center">
@@ -29,12 +22,6 @@ export default function Results({ score, total, onReset }: ResultsProps) {
         Twój wynik: {score} / {total} ({percentage}%)
       </p>
       <p className="text-lg mb-6">Poziom wiedzy: {level}</p>
-      
-      {bestScore !== null && (
-        <p className="text-gray-600 mb-6">
-          Najlepszy wynik: {bestScore} / {total}
-        </p>
-      )}
       
       <div className="space-x-4 flex flex-col sm:flex-row gap-4 justify-center">
         <button

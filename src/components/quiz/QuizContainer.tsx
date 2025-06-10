@@ -44,28 +44,28 @@ export default function QuizContainer() {
       // Remove from wrong answers if it was there
       newWrongAnswers.delete(currentQIndex);
       
+      // Update state immediately to show correct answer and increment score
+      const newScore = quizState.score + 1;
+      setQuizState(prev => ({
+        ...prev,
+        answers: [...prev.answers, answerIndex],
+        score: newScore,
+        answeredQuestions: newAnsweredQuestions,
+        correctAnswers: newCorrectAnswers,
+        wrongAnswers: newWrongAnswers
+      }));
+      
       // Move to next question after a short delay
       setTimeout(() => {
         if (currentQIndex + 1 < shuffledQuestions.length) {
           setQuizState(prev => ({
             ...prev,
-            currentQuestion: currentQIndex + 1,
-            answers: [...prev.answers, answerIndex],
-            score: prev.score + 1,
-            answeredQuestions: newAnsweredQuestions,
-            correctAnswers: newCorrectAnswers,
-            wrongAnswers: newWrongAnswers
+            currentQuestion: currentQIndex + 1
           }));
         } else {
-          const newScore = quizState.score + 1;
           setQuizState(prev => ({
             ...prev,
-            answers: [...prev.answers, answerIndex],
-            score: newScore,
-            isCompleted: true,
-            answeredQuestions: newAnsweredQuestions,
-            correctAnswers: newCorrectAnswers,
-            wrongAnswers: newWrongAnswers
+            isCompleted: true
           }));
           
           // Save best score

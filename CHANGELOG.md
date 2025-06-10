@@ -5,6 +5,15 @@ Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 ## [1.2.0] - 2025-06-10
 
 ### Dodane
+- 🎨 **Podświetlanie odpowiedzi** - Dodano wizualne oznaczenia poprawnych (zielone) i błędnych (czerwonych) odpowiedzi
+- 🔄 **Wielokrotne próby** - Możliwość wielokrotnego odpowiadania na pytanie do momentu udzielenia poprawnej odpowiedzi
+- ✅ **Oznaczenia odpowiedzi** - Dodano znaczniki ✓ dla poprawnych i ✗ dla błędnych odpowiedzi
+- 🐛 **Poprawa liczenia punktów** - Naprawiono błąd z podwójnym liczeniem punktów
+- 🗑️ **Uproszczenie ekranu wyników** - Usunięto wyświetlanie najlepszego wyniku, aby uniknąć nieporozumień
+
+## [1.1.0] - 2025-06-10
+
+### Dodane
 - 🗑️ **Usunięcie Prosty Quiz AI** - Usunięto prosty quiz na rzecz bardziej zaawansowanych funkcji
 - 🗑️ **Usunięcie Sekcji Testowej** - Usunięto eksperymentalną sekcję testową
 - ✏️ **Zmiana nazwy karty** - Zmieniono nazwę "Quiz Zaawansowany" na "Quiz"
@@ -17,15 +26,6 @@ Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 
 ### Techniczne
 - 🧹 **Czyszczenie kodu** - Usunięto nieużywane komponenty i foldery
-
----
-
-## Format
-- **[Wersja]** - Data wydania
-- **Dodane** - Nowe funkcje
-- **Zmienione** - Zmiany w istniejących funkcjach  
-- **Naprawione** - Poprawki błędów
-- **Usunięte** - Usunięte funkcje
 
 ---
 

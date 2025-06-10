@@ -37,7 +37,7 @@ export default function Question({
             onClick={() => !isAnswered || (!isCorrect && !wrongAnswers.has(index)) ? onAnswer(index) : null}
             disabled={isAnswered && isCorrect}
             className={`w-full text-left p-4 rounded-lg transition-colors duration-200 ${
-              isAnswered && question.correct === index
+              isCorrect && question.correct === index
                 ? 'bg-green-100 border-2 border-green-500'
                 : isAnswered && wrongAnswers.has(index)
                 ? 'bg-red-100 border-2 border-red-500 line-through'
@@ -47,7 +47,7 @@ export default function Question({
             }`}
           >
             {String.fromCharCode(65 + index)}. {option}
-            {isAnswered && question.correct === index && (
+            {isCorrect && question.correct === index && (
               <span className="ml-2 text-green-600">✓</span>
             )}
             {isAnswered && wrongAnswers.has(index) && (

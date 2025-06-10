@@ -7,9 +7,19 @@ interface QuestionProps {
   question: QuizQuestion;
   onAnswer: (index: number) => void;
   questionNumber: number;
+  isAnswered: boolean;
+  isCorrect: boolean;
+  wrongAnswers: Set<number>;
 }
 
-export default function Question({ question, onAnswer, questionNumber }: QuestionProps) {
+export default function Question({ 
+  question, 
+  onAnswer, 
+  questionNumber,
+  isAnswered,
+  isCorrect,
+  wrongAnswers 
+}: QuestionProps) {
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -24,10 +34,25 @@ export default function Question({ question, onAnswer, questionNumber }: Questio
         {question.options.map((option, index) => (
           <button
             key={index}
-            onClick={() => onAnswer(index)}
-            className="w-full text-left p-4 rounded-lg bg-gray-100 hover:bg-blue-100 transition-colors duration-200"
+            onClick={() => !isAnswered || (!isCorrect && !wrongAnswers.has(index)) ? onAnswer(index) : null}
+            disabled={isAnswered && isCorrect}
+            className={`w-full text-left p-4 rounded-lg transition-colors duration-200 ${
+              isAnswered && question.correct === index
+                ? 'bg-green-100 border-2 border-green-500'
+                : isAnswered && wrongAnswers.has(index)
+                ? 'bg-red-100 border-2 border-red-500 line-through'
+                : isAnswered && isCorrect
+                ? 'bg-gray-100 opacity-50 cursor-not-allowed'
+                : 'bg-gray-100 hover:bg-blue-100'
+            }`}
           >
             {String.fromCharCode(65 + index)}. {option}
+            {isAnswered && question.correct === index && (
+              <span className="ml-2 text-green-600">✓</span>
+            )}
+            {isAnswered && wrongAnswers.has(index) && (
+              <span className="ml-2 text-red-600">✗</span>
+            )}
           </button>
         ))}
       </div>

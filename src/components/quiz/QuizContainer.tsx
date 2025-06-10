@@ -13,7 +13,10 @@ export default function QuizContainer() {
     currentQuestion: 0,
     answers: [],
     isCompleted: false,
-    score: 0
+    score: 0,
+    answeredQuestions: new Set<number>(),
+    correctAnswers: new Set<number>(),
+    wrongAnswers: new Map<number, Set<number>>()
   });
 
   const [shuffledQuestions, setShuffledQuestions] = useState(questions);
@@ -25,30 +28,65 @@ export default function QuizContainer() {
   }, []);
 
   const handleAnswer = (answerIndex: number) => {
-    const newAnswers = [...quizState.answers, answerIndex];
-    const isCorrect = shuffledQuestions[quizState.currentQuestion].correct === answerIndex;
-    const newScore = quizState.score + (isCorrect ? 1 : 0);
-
-    if (quizState.currentQuestion + 1 < shuffledQuestions.length) {
-      setQuizState({
-        ...quizState,
-        currentQuestion: quizState.currentQuestion + 1,
-        answers: newAnswers,
-        score: newScore
-      });
-    } else {
-      setQuizState({
-        ...quizState,
-        answers: newAnswers,
-        score: newScore,
-        isCompleted: true
-      });
+    const currentQIndex = quizState.currentQuestion;
+    const isCorrect = shuffledQuestions[currentQIndex].correct === answerIndex;
+    
+    // Add to answered questions
+    const newAnsweredQuestions = new Set(quizState.answeredQuestions);
+    newAnsweredQuestions.add(currentQIndex);
+    
+    // Track correct answers
+    const newCorrectAnswers = new Set(quizState.correctAnswers);
+    const newWrongAnswers = new Map(quizState.wrongAnswers);
+    
+    if (isCorrect) {
+      newCorrectAnswers.add(currentQIndex);
+      // Remove from wrong answers if it was there
+      newWrongAnswers.delete(currentQIndex);
       
-      // Save best score
-      const bestScore = localStorage.getItem('quizBestScore');
-      if (!bestScore || newScore > parseInt(bestScore)) {
-        localStorage.setItem('quizBestScore', newScore.toString());
-      }
+      // Move to next question after a short delay
+      setTimeout(() => {
+        if (currentQIndex + 1 < shuffledQuestions.length) {
+          setQuizState(prev => ({
+            ...prev,
+            currentQuestion: currentQIndex + 1,
+            answers: [...prev.answers, answerIndex],
+            score: prev.score + 1,
+            answeredQuestions: newAnsweredQuestions,
+            correctAnswers: newCorrectAnswers,
+            wrongAnswers: newWrongAnswers
+          }));
+        } else {
+          const newScore = quizState.score + 1;
+          setQuizState(prev => ({
+            ...prev,
+            answers: [...prev.answers, answerIndex],
+            score: newScore,
+            isCompleted: true,
+            answeredQuestions: newAnsweredQuestions,
+            correctAnswers: newCorrectAnswers,
+            wrongAnswers: newWrongAnswers
+          }));
+          
+          // Save best score
+          const bestScore = localStorage.getItem('quizBestScore');
+          if (!bestScore || newScore > parseInt(bestScore)) {
+            localStorage.setItem('quizBestScore', newScore.toString());
+          }
+        }
+      }, 1000);
+    } else {
+      // Track wrong answer
+      const currentWrongAnswers = new Set(newWrongAnswers.get(currentQIndex) || []);
+      currentWrongAnswers.add(answerIndex);
+      newWrongAnswers.set(currentQIndex, currentWrongAnswers);
+      
+      // Update state with wrong answer
+      setQuizState(prev => ({
+        ...prev,
+        answeredQuestions: newAnsweredQuestions,
+        wrongAnswers: newWrongAnswers
+      }));
     }
   };
 
@@ -57,7 +95,10 @@ export default function QuizContainer() {
       currentQuestion: 0,
       answers: [],
       isCompleted: false,
-      score: 0
+      score: 0,
+      answeredQuestions: new Set<number>(),
+      correctAnswers: new Set<number>(),
+      wrongAnswers: new Map<number, Set<number>>()
     });
     const shuffled = [...questions].sort(() => Math.random() - 0.5);
     setShuffledQuestions(shuffled);
@@ -75,6 +116,9 @@ export default function QuizContainer() {
         question={shuffledQuestions[quizState.currentQuestion]} 
         onAnswer={handleAnswer}
         questionNumber={quizState.currentQuestion + 1}
+        isAnswered={quizState.answeredQuestions.has(quizState.currentQuestion)}
+        isCorrect={quizState.correctAnswers.has(quizState.currentQuestion)}
+        wrongAnswers={quizState.wrongAnswers.get(quizState.currentQuestion) || new Set()}
       />
     </div>
   );

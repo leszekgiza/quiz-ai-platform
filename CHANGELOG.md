@@ -11,6 +11,9 @@ Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 - 🏠 **Dodano przycisk powrotu** - Dodano przycisk "Wróć do strony głównej" na ekranie wyników quizu
 - ❓ **Nowe pytanie w quizie** - Dodano nowe pytanie sprawdzające zrozumienie definicji sztucznej inteligencji
 - 🐛 **Poprawki formatowania** - Naprawiono problemy z cudzysłowami w pytaniach quizu
+- 🎨 **Podświetlanie odpowiedzi** - Dodano wizualne oznaczenia poprawnych (zielone) i błędnych (czerwone) odpowiedzi
+- 🔄 **Wielokrotne próby** - Możliwość wielokrotnego odpowiadania na pytanie do momentu udzielenia poprawnej odpowiedzi
+- ✅ **Oznaczenia odpowiedzi** - Dodano znaczniki ✓ dla poprawnych i ✗ dla błędnych odpowiedzi
 
 ### Zmienione
 - 🎨 **Ulepszony układ strony głównej** - Zoptymalizowano układ kart po usunięciu Prosty Quiz AI

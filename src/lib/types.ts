@@ -1,3 +1,7 @@
+// Importy dla typów Set i Map
+type Set<T> = globalThis.Set<T>;
+type Map<K, V> = globalThis.Map<K, V>;
+
 export interface QuizDefinition {
   id: number;
   term: string;
@@ -17,4 +21,7 @@ export interface QuizState {
   answers: number[];
   isCompleted: boolean;
   score: number;
+  answeredQuestions: Set<number>;
+  correctAnswers: Set<number>;
+  wrongAnswers: Map<number, Set<number>>;
 }

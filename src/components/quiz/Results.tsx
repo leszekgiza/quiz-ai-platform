@@ -15,13 +15,18 @@ export default function Results({ score, total, onReset, nickname }: ResultsProp
   const [bestScore, setBestScore] = useState<number | null>(null);
   const percentage = Math.round((score / total) * 100);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [resultSaved, setResultSaved] = useState<boolean>(false);
 
   const level = percentage <= 40 ? 'Początkujący' : 
                 percentage <= 70 ? 'Średniozaawansowany' : 
                 'Ekspert';
 
   useEffect(() => {
+    // Funkcja do zapisywania wyniku tylko raz
     const saveResult = async () => {
+      // Jeśli wynik został już zapisany, nie zapisuj ponownie
+      if (resultSaved) return;
+      
       try {
         console.log('Próba zapisania wyniku dla:', { nickname, score, total });
         
@@ -34,6 +39,7 @@ export default function Results({ score, total, onReset, nickname }: ResultsProp
         
         console.log('Wynik zapisany w Supabase:', result);
         setSaveError(null);
+        setResultSaved(true); // Oznacz, że wynik został zapisany
         
         // Zapisz najlepszy wynik lokalnie
         const savedBest = localStorage.getItem('quizBestScore');
@@ -51,7 +57,7 @@ export default function Results({ score, total, onReset, nickname }: ResultsProp
     };
 
     saveResult();
-  }, [nickname, score, total]);
+  }, [nickname, score, total, resultSaved]);
 
   return (
     <div className="max-w-2xl mx-auto p-8 bg-white rounded-lg shadow-lg text-center">

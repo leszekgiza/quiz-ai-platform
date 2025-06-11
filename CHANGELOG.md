@@ -2,7 +2,12 @@
 
 Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 
-## [1.3.5] - 2025-06-11 - ceb1651
+## [1.3.6] - 2025-06-11
+
+### Naprawione
+- 🐛 **Podwójne zapisywanie wyników** - Naprawiono błąd powodujący podwójne zapisywanie wyników w bazie Supabase
+
+## [1.3.5] - 2025-06-11 - 60f04d5
 
 ### Dodane
 - 🚀 **Wdrożenie na produkcję** - Aplikacja została wdrożona na platformę Vercel

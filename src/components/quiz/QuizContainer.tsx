@@ -45,7 +45,8 @@ export default function QuizContainer() {
 
   const handleAnswer = (answerIndex: number) => {
     const currentQIndex = quizState.currentQuestion;
-    const isCorrect = shuffledQuestions[currentQIndex].correct === answerIndex;
+    // Poprawka: correct w pliku pytań jest indeksowane od 1, a answerIndex od 0
+    const isCorrect = shuffledQuestions[currentQIndex].correct === answerIndex + 1;
     
     // Add to answered questions
     const newAnsweredQuestions = new Set(quizState.answeredQuestions);

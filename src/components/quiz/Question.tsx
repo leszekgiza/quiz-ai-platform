@@ -38,7 +38,8 @@ export default function Question({
             disabled={isAnswered}
             className={`w-full text-left p-4 rounded-lg transition-colors duration-200 ${
               // Zawsze podświetl prawidłową odpowiedź na zielono, jeśli pytanie zostało odpowiedziane
-              isAnswered && question.correct === index
+              // Poprawka: correct w pliku pytań jest indeksowane od 1, a index od 0
+              isAnswered && question.correct === index + 1
                 ? 'bg-green-100 border-2 border-green-500'
                 : isAnswered && wrongAnswers.has(index)
                 ? 'bg-red-100 border-2 border-red-500 line-through'
@@ -48,7 +49,7 @@ export default function Question({
             }`}
           >
             {String.fromCharCode(65 + index)}. {option}
-            {isCorrect && question.correct === index && (
+            {isCorrect && question.correct === index + 1 && (
               <span className="ml-2 text-green-600">✓</span>
             )}
             {isAnswered && wrongAnswers.has(index) && (

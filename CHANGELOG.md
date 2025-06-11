@@ -2,7 +2,7 @@
 
 Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 
-## [1.3.6] - 2025-06-11
+## [1.3.6] - 2025-06-11 - 60f04d5
 
 ### Naprawione
 - 🐛 **Podwójne zapisywanie wyników** - Naprawiono błąd powodujący podwójne zapisywanie wyników w bazie Supabase

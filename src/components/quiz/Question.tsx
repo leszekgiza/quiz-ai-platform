@@ -35,13 +35,14 @@ export default function Question({
           <button
             key={index}
             onClick={() => !isAnswered || (!isCorrect && !wrongAnswers.has(index)) ? onAnswer(index) : null}
-            disabled={isAnswered && isCorrect}
+            disabled={isAnswered}
             className={`w-full text-left p-4 rounded-lg transition-colors duration-200 ${
-              isCorrect && question.correct === index
+              // Zawsze podświetl prawidłową odpowiedź na zielono, jeśli pytanie zostało odpowiedziane
+              isAnswered && question.correct === index
                 ? 'bg-green-100 border-2 border-green-500'
                 : isAnswered && wrongAnswers.has(index)
                 ? 'bg-red-100 border-2 border-red-500 line-through'
-                : isAnswered && isCorrect
+                : isAnswered
                 ? 'bg-gray-100 opacity-50 cursor-not-allowed'
                 : 'bg-gray-100 hover:bg-blue-100'
             }`}

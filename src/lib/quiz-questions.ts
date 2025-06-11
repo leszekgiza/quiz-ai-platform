@@ -35,7 +35,7 @@ export const questions: QuizQuestion[] = [
       'Jest zdolna do tworzenia nowych treści'
     ],
     correct: 4,
-    definitionId: 2
+    definitionId: 3
   },
   {
     id: 4,
@@ -47,7 +47,7 @@ export const questions: QuizQuestion[] = [
       'Metoda programowania AI'
     ],
     correct: 2,
-    definitionId: 2
+    definitionId: 4
   },
   {
     id: 5,
@@ -59,7 +59,7 @@ export const questions: QuizQuestion[] = [
       'Standardy programistyczne dla aplikacji AI'
     ],
     correct: 1,
-    definitionId: 2
+    definitionId: 1
   },
   {
     id: 6,
@@ -71,7 +71,7 @@ export const questions: QuizQuestion[] = [
       'Artificial Intelligence (AI)'
     ],
     correct: 4,
-    definitionId: 2
+    definitionId: 4
   },
   {
     id: 7,
@@ -83,7 +83,7 @@ export const questions: QuizQuestion[] = [
       'Standardy programistyczne dla aplikacji AI'
     ],
     correct: 2,
-    definitionId: 1
+    definitionId: 2
   },
   {
     id: 8,
@@ -95,7 +95,7 @@ export const questions: QuizQuestion[] = [
       'Wchodzi w tryb uprzedzeń (Bias)'
     ],
     correct: 3,
-    definitionId: 1
+    definitionId: 3
   },
   {
     id: 9,
@@ -107,7 +107,7 @@ export const questions: QuizQuestion[] = [
       'Pisanie kodu do modeli AI.'
     ],
     correct: 2,
-    definitionId: 1
+    definitionId: 2
   },
   {
     id: 10,
@@ -131,7 +131,7 @@ export const questions: QuizQuestion[] = [
       'Data, po której model nie posiada informacji o nowszych wydarzeniach'
     ],
     correct: 4,
-    definitionId: 1
+    definitionId: 4
   },
   {
     id: 12,
@@ -143,7 +143,7 @@ export const questions: QuizQuestion[] = [
       'Context Window'
     ],
     correct: 3,
-    definitionId: 1
+    definitionId: 3
   },
   {
     id: 13,
@@ -155,7 +155,7 @@ export const questions: QuizQuestion[] = [
       'Token'
     ],
     correct: 2,
-    definitionId: 3
+    definitionId: 2
   },
   {
     id: 14,
@@ -179,7 +179,7 @@ export const questions: QuizQuestion[] = [
       'Reinforcement Learning from Human Feedback (RLHF)'
     ],
     correct: 4,
-    definitionId: 1
+    definitionId: 4
   },
   {
     id: 16,
@@ -191,7 +191,7 @@ export const questions: QuizQuestion[] = [
       "Magia informatyczna – czyli 'działa, ale nie wiadomo czemu'"
     ],
     correct: 3,
-    definitionId: 4
+    definitionId: 3
   },
   {
     id: 17,
@@ -227,7 +227,7 @@ export const questions: QuizQuestion[] = [
       'Cyfrowi koledzy po fachu z syndromem przepracowania'
     ],
     correct: 3,
-    definitionId: 1
+    definitionId: 3
   },
   {
     id: 20,
@@ -239,7 +239,7 @@ export const questions: QuizQuestion[] = [
       'Szeptanie do AI słodkich kłamstw'
     ],
     correct: 2,
-    definitionId: 1
+    definitionId: 2
   },
   {
     id: 21,
@@ -251,7 +251,7 @@ export const questions: QuizQuestion[] = [
       'Wykrywanie anomalii (Anomaly detection)'
     ],
     correct: 4,
-    definitionId: 2
+    definitionId: 4
   },
   {
     id: 22,
@@ -263,6 +263,6 @@ export const questions: QuizQuestion[] = [
       'Kurs „Język ludzki dla początkujących botów”'
     ],
     correct: 1,
-    definitionId: 3
+    definitionId: 1
   }
 ];

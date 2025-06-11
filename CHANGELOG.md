@@ -2,7 +2,12 @@
 
 Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 
-## [1.4.0] - 2025-06-11 ff7b7ab346bbd21cfb196593298f0e8af8f178de
+## [1.4.1] - 2025-06-11
+
+### Zmienione
+- 🎮 **Ulepszony standardowy quiz** - Po udzieleniu błędnej odpowiedzi, prawidłowa odpowiedź jest podświetlana na zielono przez 5 sekund przed przejściem do kolejnego pytania
+
+## [1.4.0] - 2025-06-11 831549a
 
 ### Dodane
 - 🤖 **AI Quiz** - Nowa funkcjonalność quizu z losowo wybieranymi 10 pytaniami z puli 125 pytań

@@ -103,6 +103,36 @@ export default function QuizContainer() {
         answeredQuestions: newAnsweredQuestions,
         wrongAnswers: newWrongAnswers
       }));
+      
+      // Pokaż prawidłową odpowiedź na 5 sekund przed przejściem do kolejnego pytania
+      setTimeout(() => {
+        // Dodaj prawidłową odpowiedź do correctAnswers tymczasowo, aby podświetlić ją na zielono
+        setQuizState(prev => ({
+          ...prev,
+          correctAnswers: new Set([...prev.correctAnswers, currentQIndex])
+        }));
+        
+        // Po 5 sekundach przejdź do następnego pytania
+        setTimeout(() => {
+          // Usuń bieżące pytanie z correctAnswers, ponieważ nie było faktycznie poprawne
+          const tempCorrectAnswers = new Set(quizState.correctAnswers);
+          tempCorrectAnswers.delete(currentQIndex);
+          
+          if (currentQIndex + 1 < shuffledQuestions.length) {
+            setQuizState(prev => ({
+              ...prev,
+              currentQuestion: currentQIndex + 1,
+              correctAnswers: tempCorrectAnswers
+            }));
+          } else {
+            setQuizState(prev => ({
+              ...prev,
+              isCompleted: true,
+              correctAnswers: tempCorrectAnswers
+            }));
+          }
+        }, 5000); // 5 sekund
+      }, 1000); // 1 sekunda opóźnienia przed pokazaniem prawidłowej odpowiedzi
     }
   };
 

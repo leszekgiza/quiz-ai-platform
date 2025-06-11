@@ -2,7 +2,13 @@
 
 Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 
-## [1.3.0] - 2025-06-11
+## [1.3.5] - 2025-06-11 - ceb1651
+
+### Dodane
+- 🚀 **Wdrożenie na produkcję** - Aplikacja została wdrożona na platformę Vercel
+- 🔄 **Synchronizacja z GitHub** - Kod źródłowy został zsynchronizowany z repozytorium GitHub
+
+## [1.3.0] - 2025-06-11 - ceb1651
 
 ### Dodane
 - 👤 **System nickname'a** - Dodano możliwość wprowadzania nickname'a przed rozpoczęciem quizu

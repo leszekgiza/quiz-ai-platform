@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export',
+  // Usunięto output: 'export', aby umożliwić standardowe budowanie serwera
   trailingSlash: true,
   distDir: '.next',
   images: {

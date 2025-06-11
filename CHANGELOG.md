@@ -2,7 +2,15 @@
 
 Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 
-## [1.2.0] - 2025-06-10
+## [1.3.0] - 2025-06-11
+
+### Dodane
+- 👤 **System nickname'a** - Dodano możliwość wprowadzania nickname'a przed rozpoczęciem quizu
+- 💾 **Zapisywanie wyników** - Wyniki quizu są zapisywane w bazie Supabase wraz z nickname'em
+- 🌟 **Wyświetlanie nickname'a** - Nickname jest wyświetlany podczas quizu
+- 🏆 **Link do rankingu** - Dodano link do strony z rankingiem najlepszych wyników
+
+## [1.2.0] - 2025-06-10 - 7cbf282
 
 ### Dodane
 - 🎨 **Podświetlanie odpowiedzi** - Dodano wizualne oznaczenia poprawnych (zielone) i błędnych (czerwonych) odpowiedzi

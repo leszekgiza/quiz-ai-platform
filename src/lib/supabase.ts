@@ -30,6 +30,7 @@ export interface QuizResult {
   score: number;
   total: number;
   created_at: string;
+  quiz_type?: string; // Dodajemy opcjonalne pole quiz_type
 };
 
 // Funkcja do zapisywania wyniku
@@ -41,33 +42,41 @@ export async function saveQuizResult(result: Omit<QuizResult, 'id' | 'created_at
       .insert([{
         nickname: result.nickname,
         score: result.score,
-        total: result.total
+        total: result.total,
+        quiz_type: result.quiz_type || 'standard' // Domyślnie 'standard' jeśli nie podano
         // Nie musimy podawać created_at, Supabase automatycznie ustawi tę wartość
       }])
       .select();
 
     if (error) {
       console.error('Błąd z Supabase:', error);
-      throw error;
+      return { success: false, error: error.message };
     }
 
     console.log('Zapisano wynik:', data);
-    return data?.[0];
-  } catch (error) {
+    return { success: true, data: data?.[0] };
+  } catch (error: any) {
     console.error('Błąd w saveQuizResult:', error);
-    throw error;
+    return { success: false, error: error?.message || 'Nieznany błąd' };
   }
 }
 
 // Funkcja do pobierania najlepszych wyników
-export async function getTopResults(limit = 10): Promise<QuizResult[]> {
+export async function getTopResults(limit = 10, quizType?: string): Promise<QuizResult[]> {
   console.log('Pobieranie najlepszych wyników...');
   try {
-    const { data, error } = await supabase
+    let query = supabase
       .from('quiz_results')
       .select('*')
       .order('score', { ascending: false })
       .limit(limit);
+    
+    // Jeśli podano quizType, filtrujemy wyniki
+    if (quizType) {
+      query = query.eq('quiz_type', quizType);
+    }
+    
+    const { data, error } = await query;
 
     if (error) {
       console.error('Błąd z Supabase przy pobieraniu wyników:', error);

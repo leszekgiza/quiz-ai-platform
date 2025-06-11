@@ -34,7 +34,8 @@ export default function Results({ score, total, onReset, nickname }: ResultsProp
         const result = await saveQuizResult({
           nickname,
           score,
-          total
+          total,
+          quiz_type: 'simple'
         });
         
         console.log('Wynik zapisany w Supabase:', result);

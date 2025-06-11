@@ -2,6 +2,16 @@
 
 Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 
+## [1.4.0] - 2025-06-11
+
+### Dodane
+- 🤖 **AI Quiz** - Nowa funkcjonalność quizu z losowo wybieranymi 10 pytaniami z puli 125 pytań
+- 📚 **Wyjaśnienia pojęć** - Po udzieleniu błędnej odpowiedzi pokazywane jest wyjaśnienie na 5 sekund
+- 🎁 **Integracja ze Słownikiem AI** - Wyjaśnienia z quizu są wyświetlane na ekranie wyników
+- 🏆 **Rozszerzony ranking** - Ranking pokazuje teraz wyniki z obu rodzajów quizów z możliwością filtrowania
+- 💾 **Zapisywanie wyników AI Quiz** - Wyniki AI Quiz są zapisywane w bazie Supabase z oznaczeniem typu quizu
+- 📝 **Typy quizów** - Dodano kolumnę `quiz_type` w bazie danych z wartościami 'simple' dla standardowego quizu i 'AI' dla AI Quiz
+
 ## [1.3.6] - 2025-06-11 - 60f04d5
 
 ### Naprawione

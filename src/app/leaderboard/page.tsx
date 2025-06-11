@@ -3,16 +3,37 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getTopResults, QuizResult } from '@/lib/supabase';
+import { useSearchParams } from 'next/navigation';
 
 export default function LeaderboardPage() {
   const [results, setResults] = useState<QuizResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'all' | 'simple' | 'AI'>('all');
+  
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get('tab');
 
   useEffect(() => {
+    // Ustaw aktywną zakładkę na podstawie parametru URL
+    if (tabParam === 'simple' || tabParam === 'AI') {
+      setActiveTab(tabParam as 'simple' | 'AI');
+    } else {
+      setActiveTab('all');
+    }
+    
     async function fetchResults() {
       try {
-        const data = await getTopResults(10);
+        setLoading(true);
+        let quizType: string | undefined;
+        
+        if (tabParam === 'simple') {
+          quizType = 'simple';
+        } else if (tabParam === 'AI') {
+          quizType = 'AI';
+        }
+        
+        const data = await getTopResults(10, quizType);
         setResults(data);
         setLoading(false);
       } catch (err) {
@@ -23,7 +44,7 @@ export default function LeaderboardPage() {
     }
 
     fetchResults();
-  }, []);
+  }, [tabParam]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -39,6 +60,32 @@ export default function LeaderboardPage() {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-8 text-center">🏆 Ranking najlepszych wyników</h1>
+      
+      <div className="flex justify-center mb-6">
+        <div className="inline-flex rounded-md shadow-sm" role="group">
+          <Link href="/leaderboard?tab=all" 
+            className={`px-4 py-2 text-sm font-medium ${activeTab === 'all' 
+              ? 'bg-blue-600 text-white' 
+              : 'bg-white text-gray-700 hover:bg-gray-100'} 
+              border border-gray-200 rounded-l-lg`}>
+            Wszystkie
+          </Link>
+          <Link href="/leaderboard?tab=simple" 
+            className={`px-4 py-2 text-sm font-medium ${activeTab === 'simple' 
+              ? 'bg-blue-600 text-white' 
+              : 'bg-white text-gray-700 hover:bg-gray-100'} 
+              border-t border-b border-gray-200`}>
+            Quiz Standardowy
+          </Link>
+          <Link href="/leaderboard?tab=AI" 
+            className={`px-4 py-2 text-sm font-medium ${activeTab === 'AI' 
+              ? 'bg-blue-600 text-white' 
+              : 'bg-white text-gray-700 hover:bg-gray-100'} 
+              border border-gray-200 rounded-r-lg`}>
+            AI Quiz
+          </Link>
+        </div>
+      </div>
       
       {loading ? (
         <div className="flex justify-center my-12">
@@ -81,6 +128,11 @@ export default function LeaderboardPage() {
                   </td>
                   <td className="py-3 px-4 text-gray-500">
                     {formatDate(result.created_at)}
+                    {result.quiz_type && (
+                      <span className={`ml-2 text-xs px-2 py-1 rounded ${result.quiz_type === 'ai-quiz' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}`}>
+                        {result.quiz_type === 'ai-quiz' ? 'AI Quiz' : 'Standard'}
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -89,18 +141,24 @@ export default function LeaderboardPage() {
         </div>
       )}
       
-      <div className="mt-8 flex justify-center space-x-4">
+      <div className="mt-8 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
         <Link
           href="/quiz"
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-center"
         >
-          Spróbuj swoich sił w quizie
+          Standardowy Quiz
+        </Link>
+        <Link
+          href="/ai-quiz"
+          className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-center"
+        >
+          AI Quiz
         </Link>
         <Link
           href="/"
-          className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+          className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-center"
         >
-          Wróć do strony głównej
+          Strona główna
         </Link>
       </div>
     </div>

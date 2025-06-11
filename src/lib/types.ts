@@ -25,3 +25,23 @@ export interface QuizState {
   correctAnswers: Set<number>;
   wrongAnswers: Map<number, Set<number>>;
 }
+
+export interface AIQuizQuestion {
+  id: number;
+  question: string;
+  options: string[];
+  correct: number[];
+  explanation: string;
+}
+
+export interface AIQuizState {
+  currentQuestion: number;
+  answers: number[][];
+  isCompleted: boolean;
+  score: number;
+  answeredQuestions: Set<number>;
+  correctAnswers: Set<number>;
+  wrongAnswers: Map<number, Set<number>>;
+  showingCorrectAnswer: boolean;
+  explanations: string[];
+}

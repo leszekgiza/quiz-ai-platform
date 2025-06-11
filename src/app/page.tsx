@@ -50,18 +50,21 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* AI Quiz Card - Coming Soon */}
-          <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow opacity-75">
+          {/* AI Quiz Card */}
+          <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
             <div className="text-3xl mb-4">🤖</div>
             <h3 className="text-xl font-semibold mb-3 text-gray-800">
-              AI Quiz (Wkrótce)
+              AI Quiz
             </h3>
             <p className="text-gray-600 mb-4">
-              Interaktywny quiz generowany przez AI - w przygotowaniu.
+              Losowe pytania z wyjaśnieniami i możliwością nauki.
             </p>
-            <div className="inline-block w-full text-center px-4 py-2 bg-gray-400 text-white rounded-lg cursor-not-allowed">
-              Wkrótce dostępne
-            </div>
+            <Link 
+              href="/ai-quiz"
+              className="inline-block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+            >
+              Rozpocznij AI Quiz
+            </Link>
           </div>
         </div>
 

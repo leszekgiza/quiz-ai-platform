@@ -8,6 +8,7 @@ Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 - 🎮 **Ulepszony standardowy quiz** - Dodano przycisk "Dalej" do zatwierdzania odpowiedzi, zamiast automatycznego podświetlania wszystkich poprawnych odpowiedzi po wybraniu jednej z nich
 - 🤖 **Ulepszony AI Quiz** - Dodano przycisk "Dalej" do zatwierdzania odpowiedzi w quizie AI, umożliwiając wybór wielu odpowiedzi przed otrzymaniem informacji zwrotnej
 - 🔄 **Zmieniony przepływ quizu** - Poprawne odpowiedzi nie są już automatycznie podświetlane po wybraniu jednej z nich
+- 📝 **Zaktualizowane pytania quizu** - Zastąpiono dotychczasowe pytania nowym zestawem 18 pytań dotyczących AI, tokenów, halucynacji, promptów i narzędzi AI
 
 ### Naprawione
 - 🐛 **Naprawiono natychmiastowe podświetlanie odpowiedzi** - System teraz czeka na zatwierdzenie odpowiedzi przez użytkownika przed pokazaniem informacji zwrotnej

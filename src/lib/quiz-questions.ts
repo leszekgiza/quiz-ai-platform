@@ -214,7 +214,7 @@ export const questions: QuizQuestion[] = [
       "Suno",
       "Midjourney"
     ],
-    "correct": 2,
+    "correct": 3,
     "definitionId": 18
   }
 ];

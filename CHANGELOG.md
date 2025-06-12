@@ -2,15 +2,15 @@
 
 Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 
-## [1.4.1] - 2025-06-11 0e5557e
-0e5557ebbb0bf8a0acd4ec793b41b1d78f136e89
+## [1.4.1] - 2025-06-12
 
 ### Zmienione
-- 🎮 **Ulepszony standardowy quiz** - Po udzieleniu błędnej odpowiedzi, prawidłowa odpowiedź jest podświetlana na zielono przez 5 sekund przed przejściem do kolejnego pytania
-- 📝 **Poprawione pytania quizu** - Uporządkowano parametry `correct` i `definitionId` w pytaniach quizu, aby poprawnie wskazywały na właściwe odpowiedzi i definicje
+- 🎮 **Ulepszony mechanizm odpowiedzi w quizie** - Dodano przycisk "Dalej" do zatwierdzania odpowiedzi
+- 📝 **Poprawione wyświetlanie odpowiedzi** - Odpowiedzi są teraz pokazywane jako poprawne/niepoprawne dopiero po kliknięciu przycisku "Dalej"
+- 🔄 **Zmieniony przepływ quizu** - Poprawne odpowiedzi nie są już automatycznie podświetlane po wybraniu jednej z nich
 
 ### Naprawione
-- 🐛 **Naprawiono indeksowanie odpowiedzi** - Poprawiono problem z indeksowaniem odpowiedzi w quizie, gdzie indeksy w pliku pytań były liczone od 1, a w kodzie od 0
+- 🐛 **Naprawiono natychmiastowe podświetlanie wszystkich poprawnych odpowiedzi** - System teraz czeka na zatwierdzenie odpowiedzi przez użytkownika przed pokazaniem informacji zwrotnej
 
 ## [1.4.0] - 2025-06-11 831549a
 

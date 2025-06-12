@@ -19,7 +19,9 @@ export default function QuizContainer() {
     score: 0,
     answeredQuestions: new Set<number>(),
     correctAnswers: new Set<number>(),
-    wrongAnswers: new Map<number, Set<number>>()
+    wrongAnswers: new Map<number, Set<number>>(),
+    selectedAnswers: new Map<number, Set<number>>(),
+    showFeedback: new Set<number>()
   });
 
   const [shuffledQuestions, setShuffledQuestions] = useState(questions);
@@ -45,96 +47,102 @@ export default function QuizContainer() {
 
   const handleAnswer = (answerIndex: number) => {
     const currentQIndex = quizState.currentQuestion;
-    // Poprawka: correct w pliku pytań jest indeksowane od 1, a answerIndex od 0
-    const isCorrect = shuffledQuestions[currentQIndex].correct === answerIndex + 1;
     
-    // Add to answered questions
+    // Track selected answers
+    const newSelectedAnswers = new Map(quizState.selectedAnswers);
+    const currentSelectedAnswers = new Set(newSelectedAnswers.get(currentQIndex) || []);
+    
+    // Toggle selection
+    if (currentSelectedAnswers.has(answerIndex)) {
+      currentSelectedAnswers.delete(answerIndex);
+    } else {
+      currentSelectedAnswers.add(answerIndex);
+    }
+    
+    newSelectedAnswers.set(currentQIndex, currentSelectedAnswers);
+    
+    // Update state with selected answer
+    setQuizState(prev => ({
+      ...prev,
+      selectedAnswers: newSelectedAnswers
+    }));
+  };
+  
+  const handleSubmit = () => {
+    const currentQIndex = quizState.currentQuestion;
+    const currentSelectedAnswers = quizState.selectedAnswers.get(currentQIndex) || new Set<number>();
+    
+    // If no answers selected, do nothing
+    if (currentSelectedAnswers.size === 0) return;
+    
+    // Mark question as answered
     const newAnsweredQuestions = new Set(quizState.answeredQuestions);
     newAnsweredQuestions.add(currentQIndex);
     
-    // Track correct answers
+    // Check if answer is correct (index + 1 because correct in questions is 1-indexed)
+    const isCorrect = shuffledQuestions[currentQIndex].correct === Array.from(currentSelectedAnswers)[0] + 1;
+    
+    // Track correct answers and wrong answers
     const newCorrectAnswers = new Set(quizState.correctAnswers);
     const newWrongAnswers = new Map(quizState.wrongAnswers);
+    const newShowFeedback = new Set(quizState.showFeedback);
+    newShowFeedback.add(currentQIndex);
     
     if (isCorrect) {
       newCorrectAnswers.add(currentQIndex);
       // Remove from wrong answers if it was there
       newWrongAnswers.delete(currentQIndex);
       
-      // Update state immediately to show correct answer and increment score
+      // Update score
       const newScore = quizState.score + 1;
+      
+      // Update state to show feedback
       setQuizState(prev => ({
         ...prev,
-        answers: [...prev.answers, answerIndex],
+        answers: [...prev.answers, Array.from(currentSelectedAnswers)[0]],
         score: newScore,
         answeredQuestions: newAnsweredQuestions,
         correctAnswers: newCorrectAnswers,
-        wrongAnswers: newWrongAnswers
+        wrongAnswers: newWrongAnswers,
+        showFeedback: newShowFeedback
       }));
-      
-      // Move to next question after a short delay
-      setTimeout(() => {
-        if (currentQIndex + 1 < shuffledQuestions.length) {
-          setQuizState(prev => ({
-            ...prev,
-            currentQuestion: currentQIndex + 1
-          }));
-        } else {
-          setQuizState(prev => ({
-            ...prev,
-            isCompleted: true
-          }));
-          
-          // Save best score
-          const bestScore = localStorage.getItem('quizBestScore');
-          if (!bestScore || newScore > parseInt(bestScore)) {
-            localStorage.setItem('quizBestScore', newScore.toString());
-          }
-        }
-      }, 1000);
     } else {
-      // Track wrong answer
+      // Track wrong answers
       const currentWrongAnswers = new Set(newWrongAnswers.get(currentQIndex) || []);
-      currentWrongAnswers.add(answerIndex);
+      currentSelectedAnswers.forEach(answerIndex => {
+        currentWrongAnswers.add(answerIndex);
+      });
       newWrongAnswers.set(currentQIndex, currentWrongAnswers);
       
-      // Update state with wrong answer
+      // Update state to show feedback
       setQuizState(prev => ({
         ...prev,
         answeredQuestions: newAnsweredQuestions,
-        wrongAnswers: newWrongAnswers
+        wrongAnswers: newWrongAnswers,
+        showFeedback: newShowFeedback
       }));
-      
-      // Pokaż prawidłową odpowiedź na 5 sekund przed przejściem do kolejnego pytania
-      setTimeout(() => {
-        // Dodaj prawidłową odpowiedź do correctAnswers tymczasowo, aby podświetlić ją na zielono
+    }
+    
+    // After showing feedback for 3 seconds, move to next question
+    setTimeout(() => {
+      if (currentQIndex + 1 < shuffledQuestions.length) {
         setQuizState(prev => ({
           ...prev,
-          correctAnswers: new Set([...prev.correctAnswers, currentQIndex])
+          currentQuestion: currentQIndex + 1
+        }));
+      } else {
+        setQuizState(prev => ({
+          ...prev,
+          isCompleted: true
         }));
         
-        // Po 5 sekundach przejdź do następnego pytania
-        setTimeout(() => {
-          // Usuń bieżące pytanie z correctAnswers, ponieważ nie było faktycznie poprawne
-          const tempCorrectAnswers = new Set(quizState.correctAnswers);
-          tempCorrectAnswers.delete(currentQIndex);
-          
-          if (currentQIndex + 1 < shuffledQuestions.length) {
-            setQuizState(prev => ({
-              ...prev,
-              currentQuestion: currentQIndex + 1,
-              correctAnswers: tempCorrectAnswers
-            }));
-          } else {
-            setQuizState(prev => ({
-              ...prev,
-              isCompleted: true,
-              correctAnswers: tempCorrectAnswers
-            }));
-          }
-        }, 5000); // 5 sekund
-      }, 1000); // 1 sekunda opóźnienia przed pokazaniem prawidłowej odpowiedzi
-    }
+        // Save best score
+        const bestScore = localStorage.getItem('quizBestScore');
+        if (!bestScore || quizState.score > parseInt(bestScore)) {
+          localStorage.setItem('quizBestScore', quizState.score.toString());
+        }
+      }
+    }, 3000); // Show feedback for 3 seconds
   };
 
   const resetQuiz = () => {
@@ -145,7 +153,9 @@ export default function QuizContainer() {
       score: 0,
       answeredQuestions: new Set<number>(),
       correctAnswers: new Set<number>(),
-      wrongAnswers: new Map<number, Set<number>>()
+      wrongAnswers: new Map<number, Set<number>>(),
+      selectedAnswers: new Map<number, Set<number>>(),
+      showFeedback: new Set<number>()
     });
     const shuffled = [...questions].sort(() => Math.random() - 0.5);
     setShuffledQuestions(shuffled);
@@ -184,10 +194,13 @@ export default function QuizContainer() {
       <Question 
         question={shuffledQuestions[quizState.currentQuestion]} 
         onAnswer={handleAnswer}
+        onSubmit={handleSubmit}
         questionNumber={quizState.currentQuestion + 1}
         isAnswered={quizState.answeredQuestions.has(quizState.currentQuestion)}
         isCorrect={quizState.correctAnswers.has(quizState.currentQuestion)}
         wrongAnswers={quizState.wrongAnswers.get(quizState.currentQuestion) || new Set()}
+        selectedAnswers={quizState.selectedAnswers.get(quizState.currentQuestion) || new Set()}
+        showFeedback={quizState.showFeedback.has(quizState.currentQuestion)}
       />
     </div>
   );

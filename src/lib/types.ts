@@ -24,6 +24,8 @@ export interface QuizState {
   answeredQuestions: Set<number>;
   correctAnswers: Set<number>;
   wrongAnswers: Map<number, Set<number>>;
+  selectedAnswers: Map<number, Set<number>>;
+  showFeedback: Set<number>;
 }
 
 export interface AIQuizQuestion {

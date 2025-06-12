@@ -46,4 +46,6 @@ export interface AIQuizState {
   wrongAnswers: Map<number, Set<number>>;
   showingCorrectAnswer: boolean;
   explanations: string[];
+  selectedAnswers: Map<number, Set<number>>;
+  showFeedback: Set<number>;
 }

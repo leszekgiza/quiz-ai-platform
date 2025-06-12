@@ -6,21 +6,27 @@ import { motion } from 'framer-motion';
 interface AIQuestionProps {
   question: AIQuizQuestion;
   onAnswer: (index: number) => void;
+  onSubmit: () => void;
   questionNumber: number;
   isAnswered: boolean;
   isCorrect: boolean;
   wrongAnswers: Set<number>;
   showingCorrectAnswer: boolean;
+  selectedAnswers: Set<number>;
+  showFeedback: boolean;
 }
 
 export default function AIQuestion({ 
   question, 
   onAnswer, 
+  onSubmit,
   questionNumber,
   isAnswered,
   isCorrect,
   wrongAnswers,
-  showingCorrectAnswer
+  showingCorrectAnswer,
+  selectedAnswers,
+  showFeedback
 }: AIQuestionProps) {
   return (
     <motion.div
@@ -35,30 +41,30 @@ export default function AIQuestion({
       <div className="space-y-3">
         {question.options.map((option, index) => {
           const isOptionCorrect = question.correct.includes(index + 1);
+          const isSelected = selectedAnswers.has(index);
           
           return (
             <button
               key={index}
-              onClick={() => !isAnswered || (!isCorrect && !wrongAnswers.has(index)) ? onAnswer(index) : null}
-              disabled={isAnswered && isCorrect}
+              onClick={() => !isAnswered ? onAnswer(index) : null}
+              disabled={isAnswered}
               className={`w-full text-left p-4 rounded-lg transition-colors duration-200 ${
-                (isCorrect && isOptionCorrect) || (showingCorrectAnswer && isOptionCorrect)
+                showFeedback && isOptionCorrect
                   ? 'bg-green-100 border-2 border-green-500'
-                  : isAnswered && wrongAnswers.has(index)
+                  : showFeedback && isSelected && !isOptionCorrect
                   ? 'bg-red-100 border-2 border-red-500 line-through'
-                  : isAnswered && isCorrect
+                  : isSelected && !showFeedback
+                  ? 'bg-blue-100 border-2 border-blue-500'
+                  : isAnswered
                   ? 'bg-gray-100 opacity-50 cursor-not-allowed'
                   : 'bg-gray-100 hover:bg-blue-100'
               }`}
             >
               {String.fromCharCode(65 + index)}. {option}
-              {(isCorrect && isOptionCorrect) && (
+              {showFeedback && isOptionCorrect && (
                 <span className="ml-2 text-green-600">✓</span>
               )}
-              {showingCorrectAnswer && isOptionCorrect && (
-                <span className="ml-2 text-green-600">✓</span>
-              )}
-              {isAnswered && wrongAnswers.has(index) && (
+              {showFeedback && isSelected && !isOptionCorrect && (
                 <span className="ml-2 text-red-600">✗</span>
               )}
             </button>
@@ -66,7 +72,18 @@ export default function AIQuestion({
         })}
       </div>
       
-      {showingCorrectAnswer && (
+      {selectedAnswers.size > 0 && !isAnswered && (
+        <div className="mt-6 flex justify-center">
+          <button 
+            onClick={onSubmit}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition-colors duration-200"
+          >
+            Dalej
+          </button>
+        </div>
+      )}
+      
+      {showFeedback && (
         <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
           <p className="text-blue-800 font-medium">Wyjaśnienie:</p>
           <p className="text-blue-700">{question.explanation}</p>

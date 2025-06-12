@@ -5,12 +5,12 @@ Ten plik zawiera historię wszystkich zmian w aplikacji Quiz AI Platform.
 ## [1.4.1] - 2025-06-12
 
 ### Zmienione
-- 🎮 **Ulepszony mechanizm odpowiedzi w quizie** - Dodano przycisk "Dalej" do zatwierdzania odpowiedzi
-- 📝 **Poprawione wyświetlanie odpowiedzi** - Odpowiedzi są teraz pokazywane jako poprawne/niepoprawne dopiero po kliknięciu przycisku "Dalej"
+- 🎮 **Ulepszony standardowy quiz** - Dodano przycisk "Dalej" do zatwierdzania odpowiedzi, zamiast automatycznego podświetlania wszystkich poprawnych odpowiedzi po wybraniu jednej z nich
+- 🤖 **Ulepszony AI Quiz** - Dodano przycisk "Dalej" do zatwierdzania odpowiedzi w quizie AI, umożliwiając wybór wielu odpowiedzi przed otrzymaniem informacji zwrotnej
 - 🔄 **Zmieniony przepływ quizu** - Poprawne odpowiedzi nie są już automatycznie podświetlane po wybraniu jednej z nich
 
 ### Naprawione
-- 🐛 **Naprawiono natychmiastowe podświetlanie wszystkich poprawnych odpowiedzi** - System teraz czeka na zatwierdzenie odpowiedzi przez użytkownika przed pokazaniem informacji zwrotnej
+- 🐛 **Naprawiono natychmiastowe podświetlanie odpowiedzi** - System teraz czeka na zatwierdzenie odpowiedzi przez użytkownika przed pokazaniem informacji zwrotnej
 
 ## [1.4.0] - 2025-06-11 831549a
 

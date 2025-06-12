@@ -20,7 +20,9 @@ export default function AIQuizContainer() {
     correctAnswers: new Set<number>(),
     wrongAnswers: new Map<number, Set<number>>(),
     showingCorrectAnswer: false,
-    explanations: []
+    explanations: [],
+    selectedAnswers: new Map<number, Set<number>>(),
+    showFeedback: new Set<number>()
   });
 
   // Wybieramy losowo 10 pytań z pełnej puli
@@ -47,12 +49,38 @@ export default function AIQuizContainer() {
 
   const handleAnswer = (answerIndex: number) => {
     const currentQIndex = quizState.currentQuestion;
+    
+    // Toggle the selected answer
+    const currentSelectedAnswers = new Set(quizState.selectedAnswers.get(currentQIndex) || []);
+    
+    if (currentSelectedAnswers.has(answerIndex)) {
+      currentSelectedAnswers.delete(answerIndex);
+    } else {
+      currentSelectedAnswers.add(answerIndex);
+    }
+    
+    // Update the selected answers in the state
+    const newSelectedAnswers = new Map(quizState.selectedAnswers);
+    newSelectedAnswers.set(currentQIndex, currentSelectedAnswers);
+    
+    setQuizState(prev => ({
+      ...prev,
+      selectedAnswers: newSelectedAnswers
+    }));
+  };
+  
+  const handleSubmit = () => {
+    const currentQIndex = quizState.currentQuestion;
     const currentQuestion = selectedQuestions[currentQIndex];
-    const isCorrect = currentQuestion.correct.includes(answerIndex + 1);
+    const currentSelectedAnswers = quizState.selectedAnswers.get(currentQIndex) || new Set<number>();
     
     // Add to answered questions
     const newAnsweredQuestions = new Set(quizState.answeredQuestions);
     newAnsweredQuestions.add(currentQIndex);
+    
+    // Show feedback for this question
+    const newShowFeedback = new Set(quizState.showFeedback);
+    newShowFeedback.add(currentQIndex);
     
     // Track correct answers
     const newCorrectAnswers = new Set(quizState.correctAnswers);
@@ -62,91 +90,79 @@ export default function AIQuizContainer() {
     const newExplanations = [...quizState.explanations];
     newExplanations[currentQIndex] = currentQuestion.explanation;
     
-    if (isCorrect) {
+    // Check if all selected answers are correct and no correct answers are missed
+    let allCorrect = true;
+    let newScore = quizState.score;
+    
+    // Check if any selected answer is incorrect
+    currentSelectedAnswers.forEach(answerIndex => {
+      if (!currentQuestion.correct.includes(answerIndex + 1)) {
+        allCorrect = false;
+        
+        // Track wrong answer
+        const currentWrongAnswers = new Set(newWrongAnswers.get(currentQIndex) || []);
+        currentWrongAnswers.add(answerIndex);
+        newWrongAnswers.set(currentQIndex, currentWrongAnswers);
+      }
+    });
+    
+    // Check if any correct answer is missed
+    currentQuestion.correct.forEach(correctIndex => {
+      if (!currentSelectedAnswers.has(correctIndex - 1)) {
+        allCorrect = false;
+      }
+    });
+    
+    // Update score if all answers are correct
+    if (allCorrect) {
       newCorrectAnswers.add(currentQIndex);
-      // Remove from wrong answers if it was there
-      newWrongAnswers.delete(currentQIndex);
-      
-      // Update state immediately to show correct answer and increment score
-      const newScore = quizState.score + 1;
-      
-      // Dodaj odpowiedź do historii
-      const newAnswers = [...quizState.answers];
-      if (!newAnswers[currentQIndex]) {
-        newAnswers[currentQIndex] = [];
-      }
-      newAnswers[currentQIndex].push(answerIndex);
-      
-      setQuizState(prev => ({
-        ...prev,
-        answers: newAnswers,
-        score: newScore,
-        answeredQuestions: newAnsweredQuestions,
-        correctAnswers: newCorrectAnswers,
-        wrongAnswers: newWrongAnswers,
-        explanations: newExplanations
-      }));
-      
-      // Move to next question after a short delay
-      setTimeout(() => {
-        if (currentQIndex + 1 < selectedQuestions.length) {
-          setQuizState(prev => ({
-            ...prev,
-            currentQuestion: currentQIndex + 1,
-            showingCorrectAnswer: false
-          }));
-        } else {
-          setQuizState(prev => ({
-            ...prev,
-            isCompleted: true
-          }));
-          
-          // Save best score
-          const bestScore = localStorage.getItem('aiQuizBestScore');
-          if (!bestScore || newScore > parseInt(bestScore)) {
-            localStorage.setItem('aiQuizBestScore', newScore.toString());
-          }
-        }
-      }, 1000);
-    } else {
-      // Track wrong answer
-      const currentWrongAnswers = new Set(newWrongAnswers.get(currentQIndex) || []);
-      currentWrongAnswers.add(answerIndex);
-      newWrongAnswers.set(currentQIndex, currentWrongAnswers);
-      
-      // Dodaj odpowiedź do historii
-      const newAnswers = [...quizState.answers];
-      if (!newAnswers[currentQIndex]) {
-        newAnswers[currentQIndex] = [];
-      }
-      newAnswers[currentQIndex].push(answerIndex);
-      
-      // Pokaż poprawną odpowiedź przez 5 sekund
-      setQuizState(prev => ({
-        ...prev,
-        answeredQuestions: newAnsweredQuestions,
-        wrongAnswers: newWrongAnswers,
-        showingCorrectAnswer: true,
-        answers: newAnswers,
-        explanations: newExplanations
-      }));
-      
-      // Po 5 sekundach przejdź do następnego pytania
-      setTimeout(() => {
-        if (currentQIndex + 1 < selectedQuestions.length) {
-          setQuizState(prev => ({
-            ...prev,
-            currentQuestion: currentQIndex + 1,
-            showingCorrectAnswer: false
-          }));
-        } else {
-          setQuizState(prev => ({
-            ...prev,
-            isCompleted: true
-          }));
-        }
-      }, 5000);
+      newScore += 1;
     }
+    
+    // Dodaj odpowiedzi do historii
+    const newAnswers = [...quizState.answers];
+    if (!newAnswers[currentQIndex]) {
+      newAnswers[currentQIndex] = [];
+    }
+    currentSelectedAnswers.forEach(answerIndex => {
+      newAnswers[currentQIndex].push(answerIndex);
+    });
+    
+    // Update state to show feedback
+    setQuizState(prev => ({
+      ...prev,
+      answers: newAnswers,
+      score: newScore,
+      answeredQuestions: newAnsweredQuestions,
+      correctAnswers: newCorrectAnswers,
+      wrongAnswers: newWrongAnswers,
+      explanations: newExplanations,
+      showFeedback: newShowFeedback
+    }));
+    
+    // Move to next question after a delay
+    const delay = allCorrect ? 3000 : 5000;
+    
+    setTimeout(() => {
+      if (currentQIndex + 1 < selectedQuestions.length) {
+        setQuizState(prev => ({
+          ...prev,
+          currentQuestion: currentQIndex + 1,
+          showingCorrectAnswer: false
+        }));
+      } else {
+        setQuizState(prev => ({
+          ...prev,
+          isCompleted: true
+        }));
+        
+        // Save best score
+        const bestScore = localStorage.getItem('aiQuizBestScore');
+        if (!bestScore || newScore > parseInt(bestScore)) {
+          localStorage.setItem('aiQuizBestScore', newScore.toString());
+        }
+      }
+    }, delay);
   };
 
   const resetQuiz = () => {
@@ -159,7 +175,9 @@ export default function AIQuizContainer() {
       correctAnswers: new Set<number>(),
       wrongAnswers: new Map<number, Set<number>>(),
       showingCorrectAnswer: false,
-      explanations: []
+      explanations: [],
+      selectedAnswers: new Map<number, Set<number>>(),
+      showFeedback: new Set<number>()
     });
     
     // Wybierz nowy zestaw 10 pytań
@@ -202,11 +220,14 @@ export default function AIQuizContainer() {
         <AIQuestion 
           question={selectedQuestions[quizState.currentQuestion]} 
           onAnswer={handleAnswer}
+          onSubmit={handleSubmit}
           questionNumber={quizState.currentQuestion + 1}
           isAnswered={quizState.answeredQuestions.has(quizState.currentQuestion)}
           isCorrect={quizState.correctAnswers.has(quizState.currentQuestion)}
           wrongAnswers={quizState.wrongAnswers.get(quizState.currentQuestion) || new Set()}
           showingCorrectAnswer={quizState.showingCorrectAnswer}
+          selectedAnswers={quizState.selectedAnswers.get(quizState.currentQuestion) || new Set()}
+          showFeedback={quizState.showFeedback.has(quizState.currentQuestion)}
         />
       )}
     </div>
